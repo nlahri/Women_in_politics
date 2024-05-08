@@ -23,20 +23,11 @@ def load_data():
 
     return df_voteing_rights, df_chief_executive, df_share_of_women
 
-
+#Global Variables
 df_voteing_rights, df_chief_executive, df_share_of_women = load_data()
-
 country_list  = df_share_of_women.Entity.unique()
-
-
-# Side bar layout
-scope_list = ['world','africa', 'asia', 'europe', 'north america', 'south america', 'usa']
-map_scope = st.sidebar.selectbox('Select the region you want to explore', scope_list    )
-#map_scope = "world"
 red_colors = plotly.colors.sequential.Reds
-
-
-
+map_scope = "world"
 
 # Helper fucntions 
 
@@ -201,9 +192,13 @@ def plot_state_head(year_selected):
 
 ## App layout 
 
+# Side bar layout Not needed
+#scope_list = ['world','africa', 'asia', 'europe', 'north america', 'south america', 'usa']
+#map_scope = st.sidebar.selectbox('Select the region you want to explore', scope_list )
 
+
+# Make the top of the app fixed. 
 import st_fixed_container  
-
 with st_fixed_container.st_fixed_container(mode="fixed", position="top", border=True):
     #st.write("This is a fixed container.")
     st.title("History of Women Participation in World Politics")
@@ -211,18 +206,8 @@ with st_fixed_container.st_fixed_container(mode="fixed", position="top", border=
     (year_start, year_end) = slider_ph.slider('Select a range of years', 1900, 2023, (1900, 2022))
 
 # find a better way
-st.text(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-st.text(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-st.text(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-st.text(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-st.text(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-st.text(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-st.text(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-st.text(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-st.text(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-st.text(" ")
-st.text(" ")
-st.text(" ")
+for i in range(11):
+    st.text(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 
 vote_expander = st.expander("**Voting rights in the world**")
 share_expander = st.expander("**Women participation politics in the world**")
@@ -239,6 +224,8 @@ with vote_expander:
                 First men were given this right much later womne were included too.' ) 
         st.write('\nLets explore how the right to vote has changed over the course of time!')
         st.write('\n **Click the button on the left to play the animation!**')
+        st.image("media/women_vote.jpeg")
+
 
     with col_1:
         clicked_voting = st.button('Animate: Voting Rights', help='Click the button to play the animation. Select range of year a the top')
@@ -297,17 +284,15 @@ with share_expander:
         st.dataframe(df_filtered, hide_index=True)
 
 
-
-
-
 with head_expander: 
     col_hd_1, col_hd_2 = st.columns((1.75,1))
   
 
     with col_hd_1:
+        clicked_head = st.button('Animate: Women head of state', help='Click the button to play the animation. Select range of year a the top')
+
         plot_head_ph = st.empty()
         plot_head_ph.plotly_chart(plot_state_head(year_end))
-        clicked_head = st.button('Animate: Women head of state', help='Click the button to play the animation. Select range of year a the top')
         if clicked_head:
             for x in range(year_start, year_end, 1) :
                 time.sleep(.5)
@@ -329,7 +314,7 @@ with head_expander:
                  The data shows we are moving in the rght direction and fufite looks brighter")
         
         
-st.image("poster_women_politcs.png")
+st.image("media/poster_women_politcs.jpeg", use_column_width=True)
 
 
     
